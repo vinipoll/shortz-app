@@ -38,4 +38,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//testa a conecxão com o MySQL
+const sequelize = require('./config/database');
+sequelize.authenticate()
+  .then( ()=> console.log('Conexão com MySQL ok!') )
+  .catch( err => console.error('Erro de conexão', err) );
+
 module.exports = app;
