@@ -41,7 +41,7 @@ app.use(function(err, req, res, next) {
 
 
 const sequelize = require('./config/database');
-const User = require('./modules/user/user');
+const User = require('./modules/user/userModel');
 sequelize.sync({alter:true})
 .then( () => console.log('Sincronia realizada') )
 .catch( err => console.log('Erro de sincronia', err) );
