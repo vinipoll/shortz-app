@@ -6,9 +6,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Bem Vindo!' });
 });
 
-/* requisição GET para apresentar o form de cadastro */
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Criar conta' });
+
+router.get('/register', function(req, res, next){
+  res.render('register', {tittle: 'Criar Conta'});
 });
+
+
+const userController = require('../modules/user/userController');
+/* requisição GET para apresentar o form de cadastro */
+router.get('/register', userController.register );
 
 module.exports = router;
