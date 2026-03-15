@@ -19,7 +19,7 @@ exports.register = async(req, res) => {
             return render.redirect('/register');
         }
 
-        // 3- já que email e username estão ok, e as senhas batem, encriptar a senha
+        // 3- hash de senha
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
