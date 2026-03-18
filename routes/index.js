@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const userController = require('../modules/user/userController');
+const authMiddleware = require('../middlewares/auth');
 
 // requisição GET para apresentar a home page
 router.get('/', function(req, res, next) {
