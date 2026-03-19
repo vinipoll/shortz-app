@@ -75,3 +75,15 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
+
+exports.getProfile = async (userId) => {
+    try {
+        const user = await User.findByPk(userId, {
+            attributes: ['id', 'username',' email', 'fullName', 'bio', 'profilePicture']
+        });
+        return user;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Erro ao buscar perfil do usuário.');
+    }
+};
