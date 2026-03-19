@@ -1,6 +1,6 @@
 # Testes
 
-[Clique para ir aos Testes](d)
+[Clique para ir aos Testes](https://github.com/vinipoll/shortz-app/blob/main/plano-de-teste.md)
 
 # Database
 
