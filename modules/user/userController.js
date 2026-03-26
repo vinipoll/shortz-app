@@ -55,11 +55,8 @@ exports.login = async (req, res) => {
         }
 
         // 3. criar sessão do usuário
-        req.session.user = {
-            id: user.id,
-            username: user.username,
-            email: user.email
-        };
+        const userData = await this.getProfile(user.id);
+        req.session.user = userData;
 
         // 4. redireciona pro feed
         res.redirect('/feed');
@@ -101,6 +98,10 @@ exports.updateProfile = async (req, res) => {
         }
 
         await User.update(updateData, {where: { id: userId } });
+
+        // Atualiza os dados do usuário na sessão para refletir as mudanças imediatamente
+        const userData = await this.getProfile(userId);
+        req.session.user = userData;
 
         req.flash('sucess', 'Perfil atualizado com sucesso!');
         res.redirect('/profile/edit');

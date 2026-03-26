@@ -29,9 +29,11 @@ app.use(session({
   saveUninitialized: false,
   cookie: {maxAge: 1000 * 60 * 60 * 24} //duração máxima do cookie é 24 horas
 }));
+
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
+  res.locals.user = req.session.user || null; // [ADICIONAR]
   next();
 });
 
