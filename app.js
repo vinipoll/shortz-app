@@ -11,9 +11,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var expressLayouts = require("express-ejs-layouts");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/pages'));
+app.set("layout", path.join(__dirname, "views/layouts/main"));
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
