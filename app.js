@@ -8,7 +8,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./modules/user/userRoutes');
+var userRoutes = require('./modules/user/userRoutes');
 
 var app = express();
 var expressLayouts = require("express-ejs-layouts");
@@ -40,8 +40,8 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/', userRoutes);
+app.use("/", indexRouter);
+app.use("/", userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,9 +63,9 @@ app.use(function(err, req, res, next) {
 
 const sequelize = require('./config/database');
 const User = require('./modules/user/userModel');
-sequelize.sync({alter:true})
-.then( () => console.log('Sincronia realizada') )
-.catch( err => console.log('Erro de sincronia', err) );
+sequelize.sync()
+  .then(() => console.log('Banco de dados pronto.'))
+  .catch(err => console.log('Erro ao sincronizar:', err));
 
 
 //testa a conecxão com o MySQL
