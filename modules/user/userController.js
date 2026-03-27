@@ -65,7 +65,7 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.error(error);
         req.flash('error', 'Ocorreu um erro ao tentar entrar.');
-        red.redirect('/login');
+        res.redirect('/login');
     }
 };
 
@@ -78,7 +78,7 @@ exports.logout = (req, res) => {
 exports.getProfile = async (userId) => {
     try {
         const user = await User.findByPk(userId, {
-            attributes: ['id', 'username',' email', 'fullName', 'bio', 'profilePicture']
+            attributes: ['id', 'username','email', 'fullName', 'bio', 'profilePicture']
         });
         return user;
     } catch (error) {
