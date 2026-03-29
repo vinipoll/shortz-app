@@ -8,12 +8,15 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRoutes = require('./modules/user/userRoutes');
 
 var app = express();
+var expressLayouts = require("express-ejs-layouts");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/pages'));
+app.set("layout", path.join(__dirname, "views/layouts/main"));
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
@@ -26,17 +29,19 @@ app.use(session({
   saveUninitialized: false,
   cookie: {maxAge: 1000 * 60 * 60 * 24} //duração máxima do cookie é 24 horas
 }));
+
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
+  res.locals.user = req.session.user || null; // [ADICIONAR]
   next();
 });
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/", indexRouter);
+app.use("/", userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -58,9 +63,9 @@ app.use(function(err, req, res, next) {
 
 const sequelize = require('./config/database');
 const User = require('./modules/user/userModel');
-sequelize.sync({alter:true})
-.then( () => console.log('Sincronia realizada') )
-.catch( err => console.log('Erro de sincronia', err) );
+sequelize.sync()
+  .then(() => console.log('Banco de dados pronto.'))
+  .catch(err => console.log('Erro ao sincronizar:', err));
 
 
 //testa a conecxão com o MySQL
