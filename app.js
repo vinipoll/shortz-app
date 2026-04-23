@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var userRoutes = require('./modules/user/userRoutes');
+var videoRoutes = require("./modules/video/videoRoutes");
 
 var app = express();
 var expressLayouts = require("express-ejs-layouts");
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
 app.use("/", userRoutes);
+app.use("/", videoRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,7 +65,8 @@ app.use(function(err, req, res, next) {
 
 const sequelize = require('./config/database');
 const User = require('./modules/user/userModel');
-sequelize.sync()
+const Video = require("./modules/video/videoModel");
+sequelize.sync({force: true})
   .then(() => console.log('Banco de dados pronto.'))
   .catch(err => console.log('Erro ao sincronizar:', err));
 
