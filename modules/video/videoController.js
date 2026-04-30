@@ -95,3 +95,27 @@ exports.getAllVideos = async () => {
     });
     return videos;
 };
+
+exports.renderVideoPage = async (req, res) => {
+    const videoId = req.params.id;
+
+    try {
+        const video = await Video.findByPk(videoId, {
+            include: [{
+                model: User,
+                attributes: ["id","username","fullName","profilePicture"]
+            }]
+        });
+
+        if (!video) {
+            req.flash("error", "Vídeo não encontrado.");
+            return res.redirect("/feed");
+        }
+
+        res.render("video", { tittle: video.tittle, video });
+    } catch (error) {
+        console.error("Erro ao carregar a página do vídeo:", error);
+        req.flash("error","Erro ao carregar o vídeo. Tente novamente.");
+        res.redirect("/feed");
+    }
+};
