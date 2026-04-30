@@ -3,6 +3,7 @@ var router = express.Router();
 const userController = require("./userController");
 const authMiddleware = require("../../middlewares/auth");
 const upload = require("../../middlewares/profileMulter");
+const videoController = require("../video/videoController");
 
 // Rota para exibir o formulário de cadastro
 router.get("/register", (req, res) => {
@@ -25,8 +26,15 @@ router.get("/logout", userController.logout);
 
 // Rota para exibir o feed de vídeos (protegida por autenticação)
 router.get("/feed", authMiddleware, async (req, res) => {
-    // O objeto 'user' já está disponível via res.locals.user
-    res.render("feed", { title: "Feed | Shortz-App" });
+    try {
+        //busca todos os vídeos, incluindo as informações do usuário que os publicou
+        const videos = await videoController.getAllVideos();
+        res.render("feed", { title: "Feed | Shortz-App" });
+    } catch (error) {
+        console.error("Erro ao carregar o feed:", error);
+        req.flash("error", "Erro ao carregar o feed de vídeos.");
+        res.redirect("/login");
+    }
 });
 
 // Rota para exibir o perfil do usuário (protegida por autenticação)
