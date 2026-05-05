@@ -9,7 +9,7 @@ const Video = sequelize.define("Video",
         videoPath:      { type: DataTypes.STRING(255), allowNull: false },
         thumbnailPath:  { type: DataTypes.STRING(255), allowNull: false },
         views:          { type: DataTypes.INTEGER, defaultValue: 0 },
-        userId:         { type: DataTypes.INTEGER, allowNull: false, references: { model: users, key: "id" } } 
+        userId:         { type: DataTypes.INTEGER, allowNull: false, references: { model: "users", key: "id" } } 
     }, 
     {
         tableName: "videos",
