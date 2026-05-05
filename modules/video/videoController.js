@@ -62,14 +62,14 @@ exports.streamVideo = async (req, res) => {
             const head = {
                 "Content-Range": `bytes ${start}-${end}/${fileSize}`,
                 "Accept-Ranges": "bytes",
-                "Content-Legth": chuncksize,
+                "Content-Length": chunksize,
                 "Content-Type": "video/mp4",
             };
             res.writeHead(206, head);
             file.pipe(res);
         } else {
             const head = {
-                "Content-Legth": fileSize,
+                "Content-Length": fileSize,
                 "Content-Type": "video/mp4",
             };
             res.writeHead(200, head);
