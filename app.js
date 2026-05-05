@@ -62,13 +62,11 @@ app.use(function(err, req, res, next) {
 });
 
 
-
+require("./config/associations"); 
 const sequelize = require('./config/database');
-const User = require('./modules/user/userModel');
-const Video = require("./modules/video/videoModel");
 sequelize.sync({force: true})
-  .then(() => console.log('Banco de dados pronto.'))
-  .catch(err => console.log('Erro ao sincronizar:', err));
+  .then(() => console.log('Banco de dados sincronizado.'))
+  .catch(err => console.log('Erro ao sincronizar banco:', err));
 
 
 //testa a conecxão com o MySQL
