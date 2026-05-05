@@ -90,7 +90,7 @@ exports.getAllVideos = async () => {
             model: User,
             attributes: ["id","username","fullName","profilePicture"]
         }],
-        order: [["createAt","DESC"]],
+        order: [["createdAt","DESC"]],
         limit: 20
     });
     return videos;
