@@ -64,7 +64,7 @@ app.use(function(err, req, res, next) {
 
 require("./config/associations"); 
 const sequelize = require('./config/database');
-sequelize.sync({force: true})
+sequelize.sync({alter: true})
   .then(() => console.log('Banco de dados sincronizado.'))
   .catch(err => console.log('Erro ao sincronizar banco:', err));
 
