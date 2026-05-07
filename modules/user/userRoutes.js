@@ -46,4 +46,7 @@ router.get("/profile/edit", authMiddleware, async (req, res) => {
 // Rota de atualização (Protegida + Upload de 1 arquivo chamado 'profilePicture')
 router.post("/profile/edit", authMiddleware, upload.single("profilePicture"), userController.updateProfile);
 
+// Rota para exibir perfil público de um usuário
+router.get("profile/:username", userController.renderPublicProfile);
+
 module.exports = router;
