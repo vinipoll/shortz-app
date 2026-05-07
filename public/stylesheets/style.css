@@ -167,6 +167,11 @@ footer {
     background-color: #eee;
 }
 
+/* garante que o grid de vídeos no perfil seja responsivo */
+.profile-videos-grid .video-card {
+    margin-bottom: 20px;
+}
+
 /* Estilos para o Video Card no Feed */
 .video-card {
     background-color: #fff;
