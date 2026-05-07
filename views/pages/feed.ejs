@@ -33,11 +33,13 @@
                                                 <%= video.title %>
                                             </a></h6>
                                         <div class="d-flex align-items-center">
+                                            <a href="/profile/<%= video.User.username %>" class="d-flex align-items-center text-decoration-none">
                                             <img src="<%= video.User.profilePicture ? 
                                             '/uploads/profiles/' + video.User.profilePicture : 
                                             '/images/default-profile.png' %>" alt="<%= video.User.username %>"
                                                 class="rounded-circle me-2" width="24" height="24">
                                             <span class="text-muted small">@<%= video.User.username %></span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
