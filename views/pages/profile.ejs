@@ -53,7 +53,7 @@
             </h4>
             <div class="row g-4">
                 <% if (profileUser.Videos && profileUser.Videos.length > 0) { %>
-                    <% profileUser.Videos.forEach(video) => { %>
+                    <% profileUser.Videos.forEach(video => { %>
                         <div class="col-6 col-md-4 col-lg-4">
                             <div class="video-card">
                                 <a href="/video/<%= video.id %>">
