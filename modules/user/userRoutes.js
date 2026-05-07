@@ -47,6 +47,6 @@ router.get("/profile/edit", authMiddleware, async (req, res) => {
 router.post("/profile/edit", authMiddleware, upload.single("profilePicture"), userController.updateProfile);
 
 // Rota para exibir perfil público de um usuário
-router.get("profile/:username", userController.renderPublicProfile);
+router.get("/profile/:username", userController.renderPublicProfile);
 
 module.exports = router;
