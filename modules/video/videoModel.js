@@ -12,6 +12,10 @@ const Video = sequelize.define("Video",
         userId:         { type: DataTypes.INTEGER, allowNull: false, references: { model: "users", key: "id" } } 
     }, 
     {
+        likesCount:     { type: DataTypes.INTEGER, default: 0 },
+        commentsCount:  { type: DataTypes.INTEGER, default: 0 }
+    },
+    {
         tableName: "videos",
         timestamps: true,
         indexes: [

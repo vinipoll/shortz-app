@@ -1,3 +1,5 @@
+const { DataTypes } = require("sequelize");
+const sequelize = require("../../config/database");
 const Video = require("./videoModel");
 const User = require("../user/userModel");
 const fs = require("fs");
@@ -103,8 +105,14 @@ exports.renderVideoPage = async (req, res) => {
         const video = await Video.findByPk(videoId, {
             include: [{
                 model: User,
-                attributes: ["id","username","fullName","profilePicture"]
-            }]
+                attributes: ["id", "username", "fullName", "profilePicture"]
+            }],
+            attributes: {
+                include: [
+                    [sequelize.literal("(SELECT COUNT(*) FROM `likes` WHERE `likes`.`video_id` = `Video`.`id`)"), "likesCount"],
+                    [sequelize.literal("(SELECT COUNT(*) FROM `comments` WHERE `comments`.`video_id` = `Video`.`id`)"), "commentsCount"]
+                ]
+            }
         });
 
         if (!video) {
@@ -112,10 +120,18 @@ exports.renderVideoPage = async (req, res) => {
             return res.redirect("/feed");
         }
 
-        res.render("video", { tittle: video.tittle, video });
+        let isLiked = false;
+        if (req.session.user) {
+            const userId = req.session.user.id;
+            const Like = require("../like/likeModel"); // Importa o modelo Like aqui para evitar circular dependency
+            const existingLike = await Like.findOne({ where: { userId, videoId } });
+            isLiked = !!existingLike;
+        }
+
+        res.render("video", { title: video.title, video, isLiked });
     } catch (error) {
         console.error("Erro ao carregar a página do vídeo:", error);
-        req.flash("error","Erro ao carregar o vídeo. Tente novamente.");
+        req.flash("error", "Erro ao carregar o vídeo. Tente novamente.");
         res.redirect("/feed");
     }
 };
